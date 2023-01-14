@@ -5,9 +5,11 @@ const GlobalStyles = createGlobalStyle`
     body,
     #root{
       min-height: 100%;
+      min-width: 100%;
     }
     html {
       font-size: 10px;
+      /* border: 2px blue double */
     }
     body {
       background: papayawhip;
