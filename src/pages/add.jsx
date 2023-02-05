@@ -1,35 +1,44 @@
 import styled from "styled-components";
 import {addtask} from "../state/tasks.slice"
 import {useSelector,useDispatch} from "react-redux";
+import { useState } from "react";
+
 
 const Add = () => {
     
   const tasks = useSelector((state) => state.tasks);
-    const dispatch = useDispatch();
-    function clearInput(){
-      let getValue= document.getElementById("mytasks");
-        if (getValue.value !="") {
-            getValue.value = "";
-        }
- }
+  const [inputValue, setInputValue] = useState("");
+  const dispatch = useDispatch();
+  
  function myclick(){
-  dispatch(addtask(document.getElementById("mytasks").value));
-  clearInput();
+  if(inputValue){
+    for (let obj of tasks) {
+      if (obj.task === inputValue) {
+        alert("You canot enter the same task twice");
+        setInputValue('');
+        return inputValue;
+      }
+    }
+  dispatch(addtask(inputValue));
+  setInputValue('')
+  }
+  else{
+    alert("You canot enter blank task")
+  }
  }
+
   return (
    <Top>
-    <Input id="mytasks" placeholder="Enter your next mission"/>
-    <Btn onClick={ myclick} > Add</Btn>
+    <Input value={inputValue}  onChange={(text) => setInputValue(text.target.value)} placeholder="Enter your next mission"/>
+    <Btn onClick={myclick} > Add</Btn>
     </Top>
   )
 }
-//dispatch(addtask(document.getElementById("mytasks").value))
-//tasks.push({"task": "learn", "open": true})
+
 
 export default Add
 const Top = styled.div` width: 600px;
 width: 600px;
-/* border: 1px solid red; */
 font-family: "Roboto", sans-serif;
 display: flex;
 flex-direction: row;
@@ -43,12 +52,10 @@ height: 40px;
 `;
 const Input = styled.input`
   font-size: 30px;
-  /* padding: 10px; */
-  /* margin: 10px; */
-  /* background: papayawhip; */
   border: 1px solid black;
   width: 500px;
   ::placeholder {
     color:black;
   }
+  
 `;

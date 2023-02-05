@@ -42,7 +42,7 @@ position: absolute;
  justify-content: center; 
   align-items: center;
   margin-top: 10rem;
-  background: white;
+  background:white;
   margin-left:calc(50% - 300px);
   /* margin-right:50%; */
 `;

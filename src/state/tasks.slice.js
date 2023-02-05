@@ -28,5 +28,3 @@ reducers:{
 export default tasks.reducer;
 export const {addtask,changestat, deletetask,deleteAllCompleted,showAll,showActive,showClosed} = tasks.actions;
 
-//state.filter(obj => obj.task != action.payload)
-//state.filter((obj) => obj.open === true )
