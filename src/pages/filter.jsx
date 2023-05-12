@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAllCompleted, showAll, showActive, showClosed } from "../state/tasks.slice"
+import { deleteAllCompleted, showAll, showActive, showClosed,deletetaskfromDB,deleteAllCompletedtasks } from "../state/tasks.slice"
 import { useRef } from "react";
 
 const Filter = () => {
-  const tasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.mytasks);
   const dispatch = useDispatch();
   // let HowMuchUncompletedTasks = useRef(0);
   let filterStat= useRef("showAll");
@@ -19,6 +19,20 @@ const Filter = () => {
     }
     return counter;
   };
+
+  function FilterDeleteAllCompleted(){
+    let completedArr= [];
+    for(let task of tasks){
+      if (task.open === false)
+      {
+        // completedArr.push(task.id);
+        
+        dispatch(deletetaskfromDB(task.id));
+      }
+      //  dispatch(deleteAllCompletedtasks(completedArr));
+    }
+    
+  }
 
 
 
@@ -44,7 +58,11 @@ const Filter = () => {
       <ShowAll bg={filterStat.current}  onClick={() => allclick()} >All</ShowAll>
       <ShowActive bg={filterStat.current}  onClick={() => activeclick()} >Active</ShowActive>
       <ShowClose bg={filterStat.current}  onClick={() => closeclick()} >Completed</ShowClose>
-      <DeleteCompleted isOpen={tasks.length - checkforUncompletedTasks(tasks)} onClick={() => dispatch(deleteAllCompleted())} >Clear completed</DeleteCompleted>
+      <DeleteCompleted isOpen={tasks.length - checkforUncompletedTasks(tasks)} onClick={() => {
+        FilterDeleteAllCompleted();
+        dispatch(deleteAllCompleted());  
+      
+      }} >Clear completed</DeleteCompleted>
     </Buttom>
   )
 }
@@ -65,9 +83,20 @@ font-size: 2rem;
 width: 125px;
 height: 50px;
 cursor: pointer;
-background-color: turquoise;
-border-radius: 15%;
-background-color: ${({ bg }) => bg === 'showAll' ? `turquoise` : `grey`};
+color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: ${({ bg }) => bg === 'showAll' ? '#4CAF50' : '#CCCCCC'};
+  &:hover {
+    background-color: ${({ bg }) => bg === 'showAll' ? '#3e8e41' : '#AAAAAA'};
+  }
 `;
 
 const ShowActive = styled.button`
@@ -75,9 +104,20 @@ font-size: 2rem;
 width: 125px;
 height: 50px;
 cursor: pointer;
-background-color: grey;
-border-radius: 15%;
-background-color: ${({ bg }) => bg === 'showActive' ? `turquoise` : `grey`};
+color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+background-color: ${({ bg }) => bg === 'showActive' ? '#4CAF50' : '#CCCCCC'};
+&:hover {
+    background-color: ${({ bg }) => bg === 'showActive' ? '#3e8e41' : '#AAAAAA'};
+  }
 `;
 
 const ShowClose = styled.button`
@@ -85,9 +125,20 @@ font-size: 2rem;
 width: 125px;
 height: 50px;
 cursor: pointer;
-background-color: grey;
-border-radius: 15%;
-background-color: ${({ bg }) => bg === 'showClosed' ? `turquoise` : `grey`};
+color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+background-color: ${({ bg }) => bg === 'showClosed' ? '#4CAF50' : '#CCCCCC'};
+&:hover {
+    background-color: ${({ bg }) => bg === 'showClosed' ? '#3e8e41' : '#AAAAAA'};
+  }
 `;
 
 const DeleteCompleted = styled.button`
@@ -95,8 +146,18 @@ font-size: 2rem;
 width: 125px;
 height: 50px;
 cursor: pointer;
+color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 background-color: #fb5050;
-border-radius: 15%;
+
 display: ${({ isOpen }) => isOpen ? `block` : `none`};
 `;
 

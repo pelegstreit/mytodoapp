@@ -18,8 +18,8 @@ const store = configureStore({
     tasks: taksReducer,
   },
   preloadedState: initialAppState,
-  // middleware:(getDefaultMiddleware)=> [...getDefaultMiddleware(), saveToStorage]
-  middleware: [saveToStorage]
+  middleware:(getDefaultMiddleware)=> [...getDefaultMiddleware(), saveToStorage]
+  // middleware: [saveToStorage]
 });
 
 export default store;

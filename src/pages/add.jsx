@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import {addtask} from "../state/tasks.slice"
+import {addtask,AddnewTask} from "../state/tasks.slice"
 import {useSelector,useDispatch} from "react-redux";
 import { useState } from "react";
 
 
 const Add = () => {
     
-  const tasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.tasks.mytasks);
   const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
   
@@ -19,6 +19,7 @@ const Add = () => {
         return inputValue;
       }
     }
+  dispatch(AddnewTask(inputValue))
   dispatch(addtask(inputValue));
   setInputValue('')
   }
@@ -46,9 +47,24 @@ margin-top: 0rem;
 padding-top: 0px;
 `
 const Btn = styled.button`
-font-size: 2rem;
+
 width: 100px;
-height: 40px;
+height: 40px; 
+background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #3e8e41;
+  }
 `;
 const Input = styled.input`
   font-size: 30px;
